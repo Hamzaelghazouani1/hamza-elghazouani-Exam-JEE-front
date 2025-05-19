@@ -1,0 +1,78 @@
+<div class="container mt-4">
+  <!-- Client Form -->
+  <div class="card mb-4">
+    <div class="card-header">
+      <h4>{{ editing ? 'Edit Client' : 'Add New Client' }}</h4>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="onSubmit()" #clientForm="ngForm">
+        <div class="mb-3">
+          <label for="nom" class="form-label">Nom</label>
+          <input 
+            type="text" 
+            class="form-control" 
+            id="nom" 
+            name="nom"
+            [(ngModel)]="newClient.nom" 
+            required>
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input 
+            type="email" 
+            class="form-control" 
+            id="email" 
+            name="email"
+            [(ngModel)]="newClient.email" 
+            required>
+        </div>
+        <div class="btn-group">
+          <button type="submit" class="btn btn-primary">
+            {{ editing ? 'Update' : 'Add' }} Client
+          </button>
+          @if (editing) {
+            <button type="button" class="btn btn-secondary" (click)="resetForm()">
+              Cancel
+            </button>
+          }
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Clients Table -->
+  <div class="card">
+    <div class="card-header">
+      <h4>Clients List</h4>
+    </div>
+    <div class="card-body">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Email</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (client of clients; track client.id) {
+            <tr>
+              <td>{{ client.id }}</td>
+              <td>{{ client.nom }}</td>
+              <td>{{ client.email }}</td>
+              <td>
+                <button class="btn btn-sm btn-warning me-2" (click)="editClient(client)">
+                  Edit
+                </button>
+                <button class="btn btn-sm btn-danger" (click)="deleteClient(client.id)">
+                  Delete
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
